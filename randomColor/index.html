@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Build a random background color changer</title>
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <h1>Random Background Color changer</h1>
+
+    <main>
+      <div class="bg-information-container">
+        <p>Hex Code: <span id="bg-hex-code">#110815</span></p>
+        <button class="copy">Copy</button>
+      </div>
+      <button class="btn" id="btn">Start</button>
+      <div class="select">
+        <input type="number" id="number" required>
+        <p for="number">Time to change the color of background (ms)</p>
+      </div>
+    </main>
+    <script src="./script.js"></script>
+  </body>
+</html>
