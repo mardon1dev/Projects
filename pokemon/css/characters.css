@@ -1,0 +1,234 @@
+body{
+    width:100%;
+    font-family: Arial, sans-serif;
+    background: var(--white-color);
+}
+#characters{
+    padding-top:160px;
+}
+.search{
+    width: 80%;
+    text-align: center;
+    margin: 0 auto;
+}
+.search__title{
+    font-size: 35px;
+    font-weight: 400;
+}
+.search__title span{
+    font-weight: 700;
+}
+.search input{
+    margin-top: 34px;
+    width: 100%;
+    border-radius: 40px;
+    padding: 17px 40px;
+    outline:none;
+    border: none;
+    box-shadow: 0px 4px 2px 0 rgba(0,0,0,.2)
+}
+.search button{
+    display: none;
+}
+
+.pokemons{
+    margin-top:50px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    list-style: none;
+    gap:30px;
+}
+.card{
+    padding: 20px;
+    flex: 30%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid rgba(245, 219, 19, .3);
+    border-radius: 8px;
+    cursor: pointer;
+}
+.card:hover{
+    background: var(--third-color);
+    box-shadow: 0px 4px 2px 0 rgba(245, 219, 19,.6)
+}
+.card-title{
+    font-size: 25px;
+    color: var(--dark-color)
+}
+.card-subtitle{
+    font-size: 18px;
+    color: var(--dark-color)
+}
+
+.info__wrapper{
+    display: none;
+    width:100vw;
+    height: 100vh;
+    position: fixed;
+    /* top:0; */
+    bottom: 0;
+    right: 0;
+    left: 0;
+    background: rgba(0,0,0, .3);
+}
+.show{
+    display: block;
+}
+.pokemon{
+    position:absolute;
+    right:20px;
+    top:20px;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content: center; 
+    width:30px;
+    margin-left:auto;
+    cursor:pointer;
+    z-index:99;
+}
+.pokemon__span{
+    background-color: var(--white-color)
+}
+.pokemon__span:nth-child(1){
+    transform: rotate(45deg) translateX(6px);
+    width:35px;
+    height:9px;
+    border-radius: 3px;
+}
+.pokemon__span:nth-child(2){
+    transform: rotate(-45deg) translateX(6px);
+    width:35px;
+    height:9px;
+    border-radius: 3px;
+}
+.more{
+    position:absolute;
+    top:50%;
+    right:50%;
+    transform: translate(50%, -50%);
+    max-width: 760px;
+    width:100%;
+    display:flex;
+    align-items: flex-start;
+    justify-content: flex-start;
+    background: linear-gradient(#732119 50%, #D93E30 100%);
+    border-radius: 16px;
+    /* overflow: hidden; */
+}
+.more__img{
+    background: var(--danger-color);
+    border-radius: 16px;
+    position: relative;
+    height:100%;
+}
+.more__img img{
+    width:100%;
+    /* height: auto; */
+    object-fit: contain;
+}
+.pokemon__types{
+    position:absolute;
+    bottom: 10px;
+    right:10px;
+}
+.pokemon__type{
+    padding: 5px;
+    text-transform: capitalize;
+    color: var(--white-color);
+}
+.more-info{
+    padding: 30px 20px;
+    width:100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    gap: 20px
+}
+.character__name{
+    color: var(--white-color);
+    font-size: 30px;
+    text-transform: capitalize
+}
+.abilities{
+    padding: 11px 0px 11px 21px;
+    width:80%;
+    background: var(--white-color);
+    border-radius: 8px;
+}
+.information{
+    padding: 11px 0px 11px 21px;
+    list-style: none;
+    background: var(--white-color);
+    border-radius: 8px;
+}
+.information > li {
+    margin-bottom: 5px;
+}
+.power{
+    display: flex;
+    justify-content: space-between;
+    list-style: none;
+}
+.power li{
+    padding: 8px 20px;
+    background: var(--white-color);
+    border-radius: 8px;
+    display: flex;
+    flex-direction: column-reverse;
+    align-items: center;
+    gap:10px;
+}
+.power-name{
+    font-size:12px;
+}
+.power-stat{
+    font-size: 12px;
+    padding: 5px;
+    border: 2px solid black;
+    border-radius: 50%;
+}
+@media (max-width:768px){
+    .more{
+        padding: 20px;
+        flex-direction:column;
+        width: 80%;
+        align-items: center;
+    }
+}
+@media (max-width:576px){
+    .search {
+        width: 100%;
+    }
+    .card{
+        max-width:45%;
+        /* flex: 45%; */
+    }
+    .more{
+        padding: 0px;
+    }
+    .more__img img{
+        height: auto;
+    }
+    .more-info{
+        padding: 10px;
+    }
+    .power{
+        display: flex;
+        flex-wrap:wrap;
+        gap: 10px;
+    }
+    .power li{
+        padding: 5px 10px;
+        flex: 40%;
+    }
+    .information > li {
+        margin-bottom: 2px;
+    }
+}
+.scroll{
+    overflow-y: hidden;
+}
