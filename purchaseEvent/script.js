@@ -1,91 +1,4 @@
-// let price = 3.26;   
-// let cid = [
-//   ['PENNY', 1.01],
-//   ['NICKEL', 2.05],
-//   ['DIME', 3.1],
-//   ['QUARTER', 4.25],
-//   ['ONE', 90],
-//   ['FIVE', 55],
-//   ['TEN', 20],
-//   ['TWENTY', 60],
-//   ['ONE HUNDRED', 100]
-// ];
-// let balance = 0;
-// for (let i = 0; i < cid.length; i++) {
-//     balance += cid[i][1];
-// }
-// let allBalance = balance.toFixed(2) - 0;
-
-// let moneyTypes = [
-//     {name: 'PENNY', value: 0.01},
-//     {name: 'NICKEL', value: 0.05},
-//     {name: 'DIME', value: 0.10},
-//     {name: 'QUARTER', value: 0.25},
-//     {name: 'ONE', value: 1.00},
-//     {name: 'FIVE', value: 5.00},
-//     {name: 'TEN', value: 10},
-//     {name: 'TWENTY', value: 20},
-//     {name: 'ONE HUNDRED', value: 100}
-// ]
-// let inputValue = document.querySelector("#cash");
-// let button = document.querySelector("#purchase-btn");
-// let charge = document.querySelector("#change-due");
-
-// let drawer = document.querySelector(".cash-drawer-display");
-// cid.map(item => {
-//     let money = item[1];
-//     let name = item[0];
-//     drawer.innerHTML += `<p class="cash-drawer-item">${name} - $${money}</p>`;
-// })
-// const chargeMoney = () => {
-//     let money = inputValue.value - 0;
-//     if (money < price) {
-//         alert("Customer does not have enough money to purchase the item")
-//     }
-//     else if (money == price) {
-//         const message = document.createElement("p");
-//         message.textContent = "No change due - customer paid with exact cash";
-//         charge.appendChild(message);
-//     }
-//     else if(money > allBalance){
-//         let message = document.createElement("p");
-//         message.textContent = "Status: INSUFFICIENT_FUNDS";
-//         charge.appendChild(message);
-//     }
-//     else if (money < allBalance){
-//         if (money > price){
-//             charge.innerHTML = "";
-//             let change = (money - price).toFixed(2) - 0;
-//             let exchange = null;
-//             let status = document.createElement("p");
-//             status.textContent = "Status: OPEN";
-//             charge.appendChild(status);
-//             for (let i = moneyTypes.length - 1; i >= 0; i--) {
-//                 if (change >= moneyTypes[i].value) {
-//                     let count = Math.floor(change / moneyTypes[i].value);
-//                     exchange = (moneyTypes[i].value * count).toFixed(2) - 0;
-//                     if (moneyTypes[i].name == cid[i][0]) {
-//                         cid[i][1] = (cid[i][1]-exchange).toFixed(2) - 0;
-//                     }
-//                     change = (change - exchange).toFixed(2) - 0;
-//                     let message = document.createElement("p");
-//                     message.textContent = `${moneyTypes[i].name.toUpperCase()}: ${moneyTypes[i].value * count}$`;
-//                     charge.appendChild(message);
-//                 }
-//             }
-//             drawer.innerHTML = "";
-//             cid.map(item => {
-//                 let money = item[1];
-//                 let name = item[0];
-//                 drawer.innerHTML += `<p class="cash-drawer-item">${name} - $${money}</p>`;
-//             })
-//         }
-//     }
-
-// }
-// button.addEventListener("click", chargeMoney)
-
-let price = 3.26;   
+let price = 3.26;
 let cid = [
   ['PENNY', 1.01],
   ['NICKEL', 2.05],
@@ -98,112 +11,127 @@ let cid = [
   ['ONE HUNDRED', 100]
 ];
 
-let balance = 0;
-for (let i = 0; i < cid.length; i++) {
-    balance += cid[i][1];
-}
-let allBalance = balance.toFixed(2) - 0;
+const displayChangeDue = document.getElementById('change-due');
+const cash = document.getElementById('cash');
+const purchaseBtn = document.getElementById('purchase-btn');
+const priceScreen = document.getElementById('price-screen');
+const cashDrawerDisplay = document.getElementById('cash-drawer-display');
 
-let moneyTypes = [
-    {name: 'PENNY', value: 0.01},
-    {name: 'NICKEL', value: 0.05},
-    {name: 'DIME', value: 0.10},
-    {name: 'QUARTER', value: 0.25},
-    {name: 'ONE', value: 1.00},
-    {name: 'FIVE', value: 5.00},
-    {name: 'TEN', value: 10.00},
-    {name: 'TWENTY', value: 20.00},
-    {name: 'ONE HUNDRED', value: 100.00}
-];
+const formatResults = (status, change) => {
+  displayChangeDue.innerHTML = `<p>Status: ${status}</p>`;
+  displayChangeDue.innerHTML += change
+    .map(
+      ([denominationName, amount]) => `<p>${denominationName}: $${amount}</p>`
+    )
+    .join('');
+};
 
-let inputValue = document.querySelector("#cash");
-let button = document.querySelector("#purchase-btn");
-let charge = document.querySelector("#change-due");
+const checkCashRegister = () => {
+  const cashInCents = Math.round(Number(cash.value) * 100);
+  const priceInCents = Math.round(price * 100);
+  if (cashInCents < priceInCents) {
+    alert('Customer does not have enough money to purchase the item');
+    cash.value = '';
+    return;
+  }
 
-let drawer = document.querySelector(".cash-drawer-display");
+  if (cashInCents === priceInCents) {
+    displayChangeDue.innerHTML =
+      '<p>No change due - customer paid with exact cash</p>';
+    cash.value = '';
+    return;
+  }
 
-// Function to update cash drawer display
-const updateDrawerDisplay = () => {
-    drawer.innerHTML = "";
-    cid.map(item => {
-        let money = item[1];
-        let name = item[0];
-        drawer.innerHTML += `<p class="cash-drawer-item">${name} - $${money.toFixed(2)}</p>`;
+  let changeDue = cashInCents - priceInCents;
+  const reversedCid = [...cid]
+    .reverse()
+    .map(([denominationName, amount]) => [
+      denominationName,
+      Math.round(amount * 100)
+    ]);
+  const denominations = [10000, 2000, 1000, 500, 100, 25, 10, 5, 1];
+  const result = { status: 'OPEN', change: [] };
+  const totalCID = reversedCid.reduce((prev, [_, amount]) => prev + amount, 0);
+
+  if (totalCID < changeDue) {
+    displayChangeDue.innerHTML = '<p>Status: INSUFFICIENT_FUNDS</p>';
+    return;
+  }
+
+  if (totalCID === changeDue) {
+    result.status = 'CLOSED';
+  }
+
+  for (let i = 0; i <= reversedCid.length; i++) {
+    if (changeDue >= denominations[i] && changeDue > 0) {
+      const [denominationName, total] = reversedCid[i];
+      const possibleChange = Math.min(total, changeDue);
+      const count = Math.floor(possibleChange / denominations[i]);
+      const amountInChange = count * denominations[i];
+      changeDue -= amountInChange;
+
+      if (count > 0) {
+        result.change.push([denominationName, amountInChange / 100]);
+      }
+    }
+  }
+  if (changeDue > 0) {
+    displayChangeDue.innerHTML = '<p>Status: INSUFFICIENT_FUNDS</p>';
+    return;
+  }
+
+  formatResults(result.status, result.change);
+  updateUI(result.change);
+};
+
+const checkResults = () => {
+  if (!cash.value) {
+    return;
+  }
+  checkCashRegister();
+};
+
+const updateUI = change => {
+  const currencyNameMap = {
+    PENNY: 'Pennies',
+    NICKEL: 'Nickels',
+    DIME: 'Dimes',
+    QUARTER: 'Quarters',
+    ONE: 'Ones',
+    FIVE: 'Fives',
+    TEN: 'Tens',
+    TWENTY: 'Twenties',
+    'ONE HUNDRED': 'Hundreds'
+  };
+  // Update cid if change is passed in
+  if (change) {
+    change.forEach(([changeDenomination, changeAmount]) => {
+      const targetArr = cid.find(
+        ([denominationName, _]) => denominationName === changeDenomination
+      );
+      targetArr[1] =
+        (Math.round(targetArr[1] * 100) - Math.round(changeAmount * 100)) / 100;
     });
+  }
+
+  cash.value = '';
+  priceScreen.textContent = `Total: $${price}`;
+  cashDrawerDisplay.innerHTML = `<p><strong>Change in drawer:</strong></p>
+    ${cid
+      .map(
+        ([denominationName, amount]) =>
+          `<p>${currencyNameMap[denominationName]}: $${amount}</p>`
+      )
+      .join('')}
+  `;
 };
 
-updateDrawerDisplay();
+purchaseBtn.addEventListener('click', checkResults);
 
-const chargeMoney = () => {
-    let money = parseFloat(inputValue.value);
-    if (isNaN(money) || money <= 0) {
-        alert("Please enter a valid amount");
-        return;
-    }
+cash.addEventListener('keydown', e => {
+  if (e.key === 'Enter') {
+    checkResults();
+  }
+});
 
-    if (money < price) {
-        alert("Customer does not have enough money to purchase the item");
-    } else if (money === price) {
-        const message = document.createElement("p");
-        message.textContent = "No change due - customer paid with exact cash";
-        charge.innerHTML = "";
-        charge.appendChild(message);
-    } else {
-        charge.innerHTML = "";
-        let change = parseFloat((money - price).toFixed(2));
-        let exchange = [];
-        let statusMessage = "Status: OPEN"; // Default status
-
-        // Check if the drawer has enough balance to provide change
-        if (change > allBalance) {
-            let message = document.createElement("p");
-            message.textContent = "Status: INSUFFICIENT_FUNDS";
-            charge.innerHTML = "";
-            charge.appendChild(message);
-            return;
-        }
-
-        // Iterate over money types from largest to smallest
-        for (let i = moneyTypes.length - 1; i >= 0; i--) {
-            if (change >= moneyTypes[i].value) {
-                let availableAmount = cid[i][1];
-                let neededAmount = Math.floor(change / moneyTypes[i].value) * moneyTypes[i].value;
-                
-                if (availableAmount >= neededAmount) {
-                    cid[i][1] = parseFloat((availableAmount - neededAmount).toFixed(2));
-                    exchange.push([moneyTypes[i].name, neededAmount]);
-                    change = parseFloat((change - neededAmount).toFixed(2));
-                } else {
-                    cid[i][1] = 0;
-                    exchange.push([moneyTypes[i].name, availableAmount]);
-                    change = parseFloat((change - availableAmount).toFixed(2));
-                }
-            }
-        }
-
-        // Calculate remaining balance in the drawer
-        let remainingBalance = cid.reduce((acc, curr) => acc + curr[1], 0);
-
-        // Check if the cash drawer is closed
-        if (remainingBalance === 0 || change > 0) {
-            statusMessage = "Status: CLOSED";
-        }
-
-        // Append status message
-        let status = document.createElement("p");
-        status.textContent = statusMessage;
-        charge.appendChild(status);
-
-        // Display change given back to the customer
-        exchange.forEach(([name, amount]) => {
-            let message = document.createElement("p");
-            message.textContent = `${name.toUpperCase()}: $${amount.toFixed(2)}`;
-            charge.appendChild(message);
-        });
-
-        // Update the drawer display
-        updateDrawerDisplay();
-    }
-};
-
-button.addEventListener("click", chargeMoney);
+updateUI();
