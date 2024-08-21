@@ -1,0 +1,108 @@
+*{
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    box-sizing: border-box;
+}
+
+body{
+    font-family: Arial, sans-serif;
+    background-color: rgb(135, 161, 184);
+}
+main{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+}
+.wrapper{
+    display: flex;
+    gap: 10px;
+    width: 250px;
+    flex-wrap: wrap;
+}
+.drum-pad {
+    width: 50px;
+    height: 50px;
+    padding: 10px;
+    flex: 30%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #009068;
+    border-radius: 10px;
+    color: white;
+    cursor: pointer;
+}
+.drum-pad span {
+    display: none;
+}
+.toggle{
+    transform: scale(0.9);
+    background-color: #3a1be8;
+    box-shadow: 0px 2px 0px 2px #3a1be8;
+}
+
+.controls{
+    margin-top: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+}
+
+.volume{
+    width: 100%;
+    /* -webkit-appearance: none; */
+}
+
+#display{
+    width: 200px;
+    background-color: white;
+    padding: 10px 0;
+    text-align: center;
+}
+
+.power {
+    border: 1px solid black;
+    width: 50px;
+    height: 22px;
+    padding: 1px;
+    background-color: black;
+}
+
+.power .inner {
+    width: 23px;
+    height: 19px;
+    background: blue;
+    border: 1px solid black;
+    box-sizing: border-box;
+    cursor: pointer;
+    float:right
+}
+.power .float{
+    float: left;
+    cursor: pointer;
+}
+
+.bank {
+    border: 1px solid black;
+    width: 50px;
+    height: 22px;
+    padding: 1px;
+    background-color: black;
+}
+
+.bank .inner {
+    width: 23px;
+    height: 19px;
+    background: blue;
+    border: 1px solid black;
+    box-sizing: border-box;
+    cursor: pointer;
+    float:right
+}
+.bank .float{
+    float: left;
+    cursor: pointer;
+}
